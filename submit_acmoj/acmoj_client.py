@@ -43,6 +43,11 @@ class ACMOJClient:
     def _make_request(self, method: str, endpoint: str, data: Dict[str, Any] = None, 
                      params: Dict[str, Any] = None) -> Optional[Dict]:
         url = f"{self.api_base}{endpoint}"
+        print(f"Making request to: {url}")
+        print(f"Method: {method}")
+        print(f"Headers: {self.headers}")
+        print(f"Data: {data}")
+        print(f"Params: {params}")
         try:
             if method.upper() == "GET":
                 response = requests.get(url, headers=self.headers, params=params, timeout=10, proxies={"https": None, "http": None})
@@ -51,6 +56,9 @@ class ACMOJClient:
             else:
                 print(f"Unsupported HTTP method: {method}")
                 return None
+
+            print(f"Response status code: {response.status_code}")
+            print(f"Response text: {response.text}")
 
             if response.status_code == 204:
                 return {"status": "success", "message": "Operation successful"}
